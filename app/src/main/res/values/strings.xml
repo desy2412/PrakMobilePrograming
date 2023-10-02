@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MobilePrograming</string>
+    <string name="pindah_activity">pindah activity</string>
+    <string name="pindah_activity_dengan_data">pindah_activity dengan data</string>
 </resources>

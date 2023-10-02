@@ -1,5 +1,6 @@
 package com.example.mobileprograming
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PersistableBundle
@@ -12,48 +13,34 @@ import android.widget.TextView
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     // deklarasi variable
-    private lateinit var input_panjang: EditText
-    private lateinit var input_lebar: EditText
-    private lateinit var input_tinggi: EditText
-    private lateinit var btn: Button
-    private lateinit var teks_hasil: TextView
-    private lateinit var result: TextView
+    private lateinit var btn_switch: Button
+    private lateinit var btn_move : Button
 
-    companion object {
-        private const val STATE_RESULT = "state_result"
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        btn_switch = findViewById(R.id.btn_switch)
+        btn_switch.setOnClickListener(this)
+        btn_move = findViewById(R.id.btn_move)
+        btn_move.setOnClickListener(this)
 
-        input_panjang = findViewById(R.id.edt_length)
-        input_lebar = findViewById(R.id.edt_width)
-        input_tinggi = findViewById(R.id.edt_height)
-        btn = findViewById(R.id.btn_result)
-        teks_hasil = findViewById(R.id.result)
-        result = findViewById(R.id.result)
-        btn.setOnClickListener (this )
-
-        if (savedInstanceState != null){
-            result.text = savedInstanceState.getString( STATE_RESULT)
-        }
     }
 
     override fun onClick(v: View?) {
-        if (v?.id==R.id.btn_result) {
-            val tinggi = input_tinggi.text.toString().trim()
-            val lebar = input_lebar.text.toString().trim()
-            val panjang = input_panjang.text.toString().trim()
-            val volume = panjang.toDouble()*tinggi.toDouble()*lebar.toDouble()
-            teks_hasil.text = volume.toString()
+        when(v?.id){
+            R.id.btn_switch -> {
+                val move = Intent(this@MainActivity, MoveActivity::class.java)
+                startActivity(move)
             }
-
+            R.id.btn_move -> {
+                val intentData = Intent(this@MainActivity, MoveWithDataActivity::class.java)
+                intentData.putExtra(MoveWithDataActivity.EXTRA_NAME, "Desy Rahmayanti")
+                intentData.putExtra(MoveWithDataActivity.EXTRA_AGE, 20)
+                intentData.putExtra(MoveWithDataActivity.EXTRA_JURUSAN, "Teknik Elektronika")
+                intentData.putExtra(MoveWithDataActivity.EXTRA_PRODI, "Pendidikan Teknik Informatika")
+                startActivity(intentData)
+            }
         }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putString(STATE_RESULT, result.text.toString())
     }
-
-    }
+}
